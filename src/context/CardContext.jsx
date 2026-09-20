@@ -1,0 +1,74 @@
+import { createContext, useContext, useReducer } from "react";
+import { sumiation } from "../components/helper/helper";
+
+const CardContext = createContext();
+
+const initialState = {
+  selectedItems: [],
+  counteItems: 0,
+  total: 0,
+  checkeOut: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_ITEMS":
+      if (!state.selectedItems.find((item) => item.id === action.payload.id)) {
+        state.selectedItems.push({ ...action.payload, quantity: 1 });
+      }
+      return { ...state, checkeOut: false, ...sumiation(state.selectedItems) };
+    case "REMOVE_ITEMS": {
+      const newSelectedItems = state.selectedItems.filter(
+        (item) => item.id !== action.payload.id,
+      );
+      return {
+        ...state,
+        checkeOut: false,
+        selectedItems: [...newSelectedItems],
+        ...sumiation(newSelectedItems),
+      };
+    }
+
+    case "INCREASE": {
+      const increaseIndex = state.selectedItems.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      state.selectedItems[increaseIndex].quantity++;
+      return { ...state, checkeOut: false, ...sumiation(state.selectedItems) };
+    }
+    case "DECREASE": {
+      const decreaseIndex = state.selectedItems.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      state.selectedItems[decreaseIndex].quantity--;
+
+      return { ...state, checkeOut: false, ...sumiation(state.selectedItems) };
+    }
+
+    case "CHECKOUT":
+      return { selectedItems: [], counteItems: 0, total: 0, checkeOut: true };
+
+    default:
+      throw new Error("invalid");
+  }
+};
+
+function CardContextProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <CardContext.Provider value={{ state, dispatch }}>
+      {children}
+    </CardContext.Provider>
+  );
+}
+
+const useCard = () => {
+  const { state, dispatch } = useContext(CardContext);
+  return [state, dispatch];
+};
+
+
+export default CardContextProvider;
+
+export { useCard };
