@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
-import { useCard } from "../context/CardContext";
+// import { useCard } from "../context/CardContext";
 
 import styles from "./Layout.module.css"
 
 function Layout({ children }) {
-  const [state] = useCard();
+  // const [state] = useCard();
   return (
     <>
       <header className={styles.header }>
@@ -13,7 +13,7 @@ function Layout({ children }) {
         <div>
           <Link to="/chackOut">
             <PiShoppingCartSimpleBold />
-            {!!state.counter && <span>{state.counter}</span>}
+            {/* {!!state.counter && <span>{state.counter}</span>} */}
           </Link>
         </div>
       </header>

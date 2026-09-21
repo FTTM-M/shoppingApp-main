@@ -2,19 +2,20 @@ import { Link } from "react-router-dom";
 import { TbListDetails, TbShoppingBagCheck } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { quantityHandler, Title } from "./helper/helper";
-import { useCard } from "../context/CardContext";
+//import { useCard } from "../context/CardContext";
 import styles from "./ProductCards.module.css";
 
 function ProductCards({ data }) {
   const { title, image, id, price } = data;
 
-  const [state, dispatch] = useCard();
+  //const [state, dispatch] = useCard();
 
-  const quantity = quantityHandler(state, id);
+  //const quantity = quantityHandler(state, id);
+  const quantity=0;
   // console.log(state);
 
   const clickHandler = (type) => {
-    dispatch({ type, payload: data });
+    //dispatch({ type, payload: data });
     // console.log(state);
   };
 

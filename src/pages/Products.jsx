@@ -1,4 +1,4 @@
-import { useProducts } from "../context/ProductContext";
+// import { useProducts } from "../context/ProductContext";
 import ProductCards from "../components/ProductCards";
 import styles from "./Product.module.css";
 import Loading from "../components/Loading";
@@ -19,14 +19,15 @@ function Products() {
   const [display, setDisplay] = useState([]);
   const [query, setQuery] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const products = useProducts();
-  // console.log(products);
+  // const products = useProducts();
+  const products =[];
+    // console.log(products);
 
-  useEffect(() => {
-    setDisplay(products);
-    setSearch(query.search || "");
-    setQuery(initialDatas(searchParams));
-  }, [products]);
+    useEffect(() => {
+      setDisplay(products);
+      setSearch(query.search || "");
+      setQuery(initialDatas(searchParams));
+    }, [products]);
 
   useEffect(() => {
     setSearchParams(query);
