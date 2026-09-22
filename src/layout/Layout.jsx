@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 // import { useCard } from "../context/CardContext";
 
-import styles from "./Layout.module.css"
+import styles from "./Layout.module.css";
 
 function Layout({ children }) {
   // const [state] = useCard();
   return (
     <>
-      <header className={styles.header }>
-        <Link style={{color:"white"}  }to="/products">Shopping</Link>
+      <header className={styles.header}>
+        <Link style={{ color: "white" }} to="/products">
+          Shopping
+        </Link>
         <div>
           <Link to="/chackOut">
             <PiShoppingCartSimpleBold />
@@ -19,7 +21,8 @@ function Layout({ children }) {
       </header>
       {children}
       <footer className={styles.footer}>
-        Developed By <a href="https://github.com/FTTM-M/shoppingApp">FTTM</a>
+        Developed By{" "}
+        <a href="https://github.com/FTTM-M/shoppingApp-main">FTTM</a>
       </footer>
     </>
   );
