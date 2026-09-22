@@ -23,7 +23,7 @@ function Products() {
   // const products = useProducts();
   const dispatch = useDispatch();
   const {products,loading} = useSelector((state) => state.products);
-  console.log(products);
+  // console.log(products);
 
 useEffect(() => {
     setDisplay(products);

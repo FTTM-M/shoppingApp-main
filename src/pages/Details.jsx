@@ -1,17 +1,27 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { SiOpenproject } from "react-icons/si";
 import { IoMdPricetag } from "react-icons/io";
 import { FaArrowLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useDetails } from "../context/ProductContext";
+// import { useDetails } from "../context/ProductContext";
 import Loading from "../components/Loading";
-
 import styles from "./Details.module.css";
+import { fetchProduct } from "../features/products/product";
 
 function Details() {
   const { id } = useParams();
 
-  const product = useDetails(+id);
+  const dispatch = useDispatch();
+  // const product = useDetails(+id);
+  const product = useSelector((store) =>
+    store.products.products.find((i) => i.id === +id)
+  );
+
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, []);
 
   if (!product) return <Loading />;
 
