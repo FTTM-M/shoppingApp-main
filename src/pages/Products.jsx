@@ -1,18 +1,19 @@
 // import { useProducts } from "../context/ProductContext";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import ProductCards from "../components/ProductCards";
 import styles from "./Product.module.css";
 import Loading from "../components/Loading";
 import {
-
   filteredProducts,
   initialDatas,
   SearchedProducts,
 } from "../components/helper/helper";
-
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import SearchBox from "../components/SearchBox";
 import SideBar from "../components/SideBar";
+import {fetchProduct} from "../features/products/product";
 
 function Products() {
   const [search, setSearch] = useState("");
@@ -20,15 +21,22 @@ function Products() {
   const [query, setQuery] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   // const products = useProducts();
-  const products =[];
-    // console.log(products);
+  const dispatch = useDispatch();
+  const {products,loading} = useSelector((state) => state.products);
+  console.log(products);
 
-    useEffect(() => {
-      setDisplay(products);
-      setSearch(query.search || "");
-      setQuery(initialDatas(searchParams));
-    }, [products]);
+useEffect(() => {
+    setDisplay(products);
+    setSearch(query.search || "");
+    setQuery(initialDatas(searchParams));
+  }, [products]);
 
+
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, []);
+
+  
   useEffect(() => {
     setSearchParams(query);
     // console.log(products);
@@ -37,15 +45,12 @@ function Products() {
     setDisplay(filteredProducts(finalProducts, query.category));
   }, [query]);
 
- 
-
-
   return (
     <>
-     <SearchBox  search={search} setSearch={setSearch} setQuery={setQuery}/>
+      <SearchBox search={search} setSearch={setSearch} setQuery={setQuery} />
       <div className={styles.container}>
         <div className={styles.product}>
-          {!display.length && <Loading />}
+          {loading && <Loading />}
           {display.map((product) => (
             <ProductCards key={product.id} data={product} />
           ))}
