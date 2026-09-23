@@ -4,20 +4,31 @@ import { MdDeleteOutline } from "react-icons/md";
 import { quantityHandler, Title } from "./helper/helper";
 //import { useCard } from "../context/CardContext";
 import styles from "./ProductCards.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  decreaseItem,
+  deleteItem,
+  increaseItem,
+} from "../features/cart/cart";
 
 function ProductCards({ data }) {
   const { title, image, id, price } = data;
 
   //const [state, dispatch] = useCard();
-
   //const quantity = quantityHandler(state, id);
-  const quantity=0;
+
+  const dispatch = useDispatch();
+  const state = useSelector((store) => store.carts);
   // console.log(state);
 
-  const clickHandler = (type) => {
-    //dispatch({ type, payload: data });
-    // console.log(state);
-  };
+  const quantity = quantityHandler(state, id);
+  // console.log(state);
+
+  // const clickHandler = (type) => {
+  //dispatch({ type, payload: data });
+  // console.log(state);
+  // };
 
   return (
     <div className={styles.card}>
@@ -31,21 +42,21 @@ function ProductCards({ data }) {
         </Link>
         <div>
           {quantity === 1 && (
-            <button onClick={() => clickHandler("REMOVE_ITEMS")}>
+            <button onClick={() => dispatch(deleteItem(data))}>
               <MdDeleteOutline />
             </button>
           )}
 
           {quantity > 1 && (
-            <button onClick={() => clickHandler("DECREASE")}>-</button>
+            <button onClick={() => dispatch(decreaseItem(data))}>-</button>
           )}
           {!!quantity && <span>{quantity}</span>}
           {quantity == 0 ? (
-            <button onClick={() => clickHandler("ADD_ITEMS")}>
+            <button onClick={() => dispatch(addItem(data))}>
               <TbShoppingBagCheck />
             </button>
           ) : (
-            <button onClick={() => clickHandler("INCREASE")}>+</button>
+            <button onClick={() => dispatch(increaseItem(data))}>+</button>
           )}
         </div>
       </div>

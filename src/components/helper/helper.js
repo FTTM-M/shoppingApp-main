@@ -6,7 +6,7 @@ const SearchedProducts = (products, search) => {
   // console.log({ products, search });
   if (!search) return products;
   const searchProducts = products.filter((p) =>
-    p.title.toLowerCase().includes(search),
+    p.title.toLowerCase().includes(search)
   );
   return searchProducts;
 };
@@ -38,12 +38,14 @@ const initialDatas = (searchParams) => {
   return query;
 };
 
-const sumiation = (product) => {
-  const counter = product.reduce((count, curr) => count + curr.quantity, 0);
-  const total_price = product
+const price = (product) => {
+  return product
     .reduce((total, curr) => total + curr.price * curr.quantity, 0)
     .toFixed(2);
-  return { counter, total_price };
+};
+
+const quantity = (product) => {
+  return product.reduce((count, curr) => count + curr.quantity, 0);
 };
 const quantityHandler = (state, id) => {
   const index = state.selectedItems.findIndex((item) => item.id === id);
@@ -57,6 +59,7 @@ export {
   filteredProducts,
   createQuery,
   initialDatas,
-  sumiation,
+  price,
+  quantity,
   quantityHandler,
 };
